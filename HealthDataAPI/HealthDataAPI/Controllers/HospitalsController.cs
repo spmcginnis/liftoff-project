@@ -1,5 +1,6 @@
 ﻿using HealthDataAPI.Models;
 using HealthDataAPI.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace HealthDataAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("CorsPolicy")]
     public class HospitalsController : ControllerBase
     {
         private readonly HospitalService _hospitalService;

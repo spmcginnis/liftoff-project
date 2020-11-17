@@ -35,8 +35,17 @@ namespace HealthDataAPI
                 sp => sp.GetRequiredService<IOptions<HealthDataDbSettings>>().Value
             );
 
-            services.AddSingleton<PatientService>();
+            // CORS policy (for connecting via a different localhost port)
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://localhost:4200");
+                    });
+            });
 
+            services.AddSingleton<PatientService>();
             services.AddSingleton<HospitalService>();
 
             services.AddControllers();
@@ -53,6 +62,8 @@ namespace HealthDataAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
